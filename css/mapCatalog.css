@@ -1,0 +1,20 @@
+html, body{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#rightPanel{
+    height: 100%;
+    width: 20%;
+    margin: 0px;
+    float: left;
+}
+
+#map{
+    height: 100%;
+    width: 80%;
+    padding: 0;
+    margin: 0;
+    float: left;
+}

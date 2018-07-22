@@ -1,0 +1,61 @@
+[
+  {
+    "name":"ArcgisTMSLayer",
+    "data": [
+      {
+        "name": "ChinaOnlineCommunity",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetGray",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetPurplishBlue",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetWarm",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetWarm/MapServer"
+      },
+      {
+        "name": "ChinaOnlineCommunity_Mobile",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity_Mobile/MapServer"
+      },
+      {
+        "name": "ChinaOnlineCommunityENG",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer"
+      },
+      {
+        "name": "Terrain",
+        "href": "http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer"
+      }
+    ]
+  },
+  {
+    "name":"WebTileLayer",
+    "data": [
+      {
+        "name": "opencyclemap",
+        "href": "http://${subDomain}.tile.opencyclemap.org/cycle/${level}/${col}/${row}.png"
+      }
+    ]
+  },
+  {
+    "name":"ImageServiceLayer",
+    "data": [
+      {
+        "name": "Toronto",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer"
+      },
+      {
+        "name": "NLCDLandCover2001",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+      },
+      {
+        "name": "CharlotteLAS",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
+      }
+    ]
+  }
+]

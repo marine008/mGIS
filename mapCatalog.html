@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map Catalog</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.25/esri/css/esri.css">
+    <link rel="stylesheet" href="css/mapCatalog.css">
+
+    <script src="https://js.arcgis.com/3.25"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        var map;
+        var addArcgisTMSLayer, addArcgisISLayer, addWebTiledLayer;
+
+        var jsonFile = "mapConfig.json";
+        $.getJSON(jsonFile, function (data) {
+            $.each(data, function (i) {
+                var data_i = data[i];
+                $("#rightPanel").append("<span>" + data_i.name + "</span>");
+                var ulDom = $("<ul></ul>");
+                $("#rightPanel").append(ulDom);
+                $.each(data_i.data, function (j) {
+                    var data_ij = data_i.data[j];
+
+                    var liDom = $("<li></li>");
+                    $(liDom).attr("href", data_ij.href);
+                    $(liDom).text(data_ij.name);
+
+                    $(ulDom).append(liDom);
+
+                })
+            })
+        });
+
+        require(["esri/map",
+                "esri/layers/ArcGISTiledMapServiceLayer",
+                "esri/layers/ArcGISImageServiceLayer",
+                "esri/layers/WebTiledLayer",
+                "dojo/domReady!"],
+            function (Map, ArcgisTMSLayer, ArcgisISLayer, WebTiledLayer) {
+                map = new Map("map", {
+                    basemap:"topo",
+                    center:[117.23, 23.45],
+                    zoom: 8
+                });
+
+                addArcgisTMSLayer = function (obj) {
+                    map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var arcgisTMSLayer = new ArcgisTMSLayer(url);
+                    map.addLayer(arcgisTMSLayer);
+                };
+
+                addWebTiledLayer = function (obj) {
+                    map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var webTiledLayer = new WebTiledLayer(url, {
+                        "copyright": "Open Cycle Map",
+                        "id": "Open Cycle Map",
+                        "subDomains": ["a", "b", "c"]
+                    });
+                    map.addLayer(webTiledLayer);
+                };
+
+                addArcgisISLayer = function (obj) {
+                    map.removeAllLayers();
+
+                    var url = $(obj).attr("href")
+                    var arcgisISLayer = new ArcgisISLayer(url);
+                    map.addLayer(arcgisISLayer);
+                }
+        });
+    </script>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="rightPanel"></div>
+</body>
+</html>
