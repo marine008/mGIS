@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin:0;
+            font-family:"微软雅黑";
+        }
+        #allmap{
+            float: left;
+            width: 80%;
+            height: 100%;
+            overflow: hidden;
+            margin:0;
+        }
+        #rightPanel{
+            width: 20%;
+            height: 100%;
+            float: right;
+        }
+        #rightPanel input{
+            width: 40px;
+            display: inline;
+        }
+        #coordinate{
+            height: 20px;
+            width: 300px;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RMjiCBWiT59h1keGThBpZGIvhxQ83klA"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>地图量算</title>
+</head>
+<body>
+<div id="allmap">
+</div>
+<div id="rightPanel">
+    <span>点A</span>
+    <div id="A_E" class="point">
+        <input class="du" value="117"/>°
+        <input class="fen" value="28"/>′
+        <input class="miao" value="40"/>″
+    </div>
+    <div id="A_N" class="point">
+        <input class="du" value="25"/>°
+        <input class="fen" value="35"/>′
+        <input class="miao" value="22"/>″
+    </div>
+
+    <span>点B</span>
+    <div id="B_E" class="point">
+        <input class="du" value="117"/>°
+        <input class="fen" value="23"/>′
+        <input class="miao" value="45"/>″
+    </div>
+    <div id="B_N" class="point">
+        <input class="du" value="24"/>°
+        <input class="fen" value="34"/>′
+        <input class="miao" value="23"/>″
+    </div>
+    <button onclick="addPoint()">添加点</button>
+    <button onclick="calDistance()">计算距离</button>
+    <button onclick="clearMap()">清除地图</button>
+
+    <br>
+    <span>当前坐标</span>
+    <div id="coordinate"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+    map.setCurrentCity("厦门");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    map.addEventListener("click",function(e){
+        converPoint2(new BMap.Point(e.point.lng, e.point.lat));
+    });
+
+    // 转换为度分秒的格式
+    function ChangeToDFM(du)
+    {
+        var str1 = du.toString().split(".");
+        var du1 = str1[0];
+        var tp = "0."+str1[1]
+        var tp = String(tp*60);		//这里进行了强制类型转换
+        var str2 = tp.split(".");
+        var fen =str2[0];
+        tp = "0."+str2[1];
+        tp = tp*60;
+        var miao = tp.toFixed(2);
+        return du1+"°"+fen+"'"+miao+"\"";
+    }
+
+    var pointArray = [];
+    var converPArray = [];
+    function addPoint() {
+        pointArray = [];
+        converPArray = [];
+
+        var AEdu = parseFloat($("div#A_E .du").val());
+        var AEfen = parseFloat($("div#A_E .fen").val());
+        var AEmiao = parseFloat($("div#A_E .miao").val());
+
+        var ANdu = parseFloat($("div#A_N .du").val());
+        var ANfen = parseFloat($("div#A_N .fen").val());
+        var ANmiao = parseFloat($("div#A_N .miao").val());
+
+        pointArray.push(new BMap.Point(AEdu+AEfen/60+AEmiao/3600, ANdu+ANfen/60+ANmiao/3600)  );
+
+        var BEdu = parseFloat($("div#B_E .du").val());
+        var BEfen = parseFloat($("div#B_E .fen").val());
+        var BEmiao = parseFloat($("div#B_E .miao").val());
+
+        var BNdu = parseFloat($("div#B_N .du").val());
+        var BNfen = parseFloat($("div#B_N .fen").val());
+        var BNmiao = parseFloat($("div#B_N .miao").val());
+
+        pointArray.push(new BMap.Point(BEdu+BEfen/60+BEmiao/3600, BNdu+BNfen/60+BNmiao/3600)  );
+
+        converPoint(pointArray);
+    }
+
+    function converPoint(pArray) {
+        var convertor = new BMap.Convertor();
+        convertor.translate(pArray, 1, 5, converCallback);
+    }
+
+    function converPoint2(point) {
+        var pArray = [];
+        pArray.push(point);
+        var convertor = new BMap.Convertor();
+        convertor.translate(pArray, 5, 3, conver2Callback);
+    }
+    
+    function converCallback(data) {
+        if(data.status === 0){
+            for(var i=0; i< data.points.length; i++) {
+                var marker = new BMap.Marker(data.points[i]);
+                var label = new BMap.Label(data.points[i].lng.toFixed(4)+":"+data.points[i].lat.toFixed(4),{offset:new BMap.Size(20,-10)});
+                marker.setLabel(label); //添加百度label
+
+                map.addOverlay(marker);
+                map.setCenter(data.points[i]);
+
+                converPArray.push(data.points[i]);
+            }
+        }
+    }
+
+    function conver2Callback(data) {
+        if(data.status === 0) {
+            $("#coordinate").text(ChangeToDFM(data.points[0].lng) + "," + ChangeToDFM(data.points[0].lat));
+        }
+    }
+
+    function calDistance() {
+        var polyline = new BMap.Polyline(converPArray);
+        map.addOverlay(polyline);
+
+        var distance  = map.getDistance(pointArray[0], pointArray[1]);
+        var label = new BMap.Label((distance/1000).toFixed(4) + "公里" ,{position: pointArray[1], offset:new BMap.Size(20,-10)});
+        map.addOverlay(label); //添加百度label
+    }
+
+    function clearMap() {
+        map.clearOverlays();
+    }
+</script>

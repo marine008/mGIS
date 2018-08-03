@@ -1,0 +1,175 @@
+[
+  {
+    "name":"ArcgisTMSLayer",
+    "method":"addArcgisTMSLayer",
+    "data": [
+      {
+        "name": "ChinaOnlineCommunity",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetGray",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetPurplishBlue",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer"
+      },
+      {
+        "name": "ChinaOnlineStreetWarm",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetWarm/MapServer"
+      },
+      {
+        "name": "ChinaOnlineCommunity_Mobile",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity_Mobile/MapServer"
+      },
+      {
+        "name": "ChinaOnlineCommunityENG",
+        "href": "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer"
+      },
+      {
+        "name": "Terrain",
+        "href": "http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer"
+      },
+      {
+        "name": "World_Imagery",
+        "href": "https://server.arcgisonline.com/ArcGIs/rest/services/World_Imagery/MapServer"
+      },
+      {
+        "name": "World_Topo_Map",
+        "href": "https://services.arcgisonline.com/ArcGIs/rest/services/World_Topo_Map/MapServer"
+      },
+      {
+        "name": "ESRI_Imagery_World_2D",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/ESRI_Imagery_World_2D/MapServer"
+      },
+      {
+        "name": "ESRI_StreetMap_World_2D",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/ESRI_StreetMap_World_2D/MapServer"
+      },
+      {
+        "name": "NatGeo_World_Map",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
+      },
+      {
+        "name": "NGS_Topo_US_2D",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/NGS_Topo_US_2D/MapServer"
+      },
+      {
+        "name": "Ocean_Basemap",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer"
+      },
+      {
+        "name": "USA_Topo_Maps",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/USA_Topo_Maps/MapServer"
+      },
+      {
+        "name": "World_Physical_Map",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer"
+      },
+      {
+        "name": "World_Shaded_Relief",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Shaded_Relief/MapServer"
+      },
+      {
+        "name": "World_Street_Map",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
+      },
+      {
+        "name": "World_Terrain_Base",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/MapServer"
+      },
+      {
+        "name": "World_Topo_Map",
+        "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"
+      }
+    ]
+  },
+  {
+    "name":"WebTileLayer",
+    "method":"addWebTiledLayer",
+    "data": [
+      {
+        "name": "opencyclemap",
+        "href": "http://${subDomain}.tile.opencyclemap.org/cycle/${level}/${col}/${row}.png"
+      }
+    ]
+  },
+  {
+    "name":"ImageServiceLayer",
+    "method":"addArcgisISLayer",
+    "data": [
+      {
+        "name": "Toronto",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer"
+      },
+      {
+        "name": "NLCDLandCover2001",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+      },
+      {
+        "name": "CharlotteLAS",
+        "href": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
+      }
+    ]
+  },
+  {
+    "name":"VectorTileLayers",
+    "method":"addVectorTileLayer",
+    "data": [
+      {
+        "name": "World_Basemap_v2",
+        "href": "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer"
+      },
+      {
+        "name": "Other",
+        "href": "https://www.arcgis.com/sharing/rest/content/items/4cf7e1fb9f254dcda9c8fbadb15cf0f8/resources/styles/root.json"
+      }
+    ]
+  },
+  {
+
+    "name":"TDTTileLayers",
+    "method":"addTDTTileLayer",
+    "data": [
+      {
+        "name": "img_c 全球影像地图服务",
+        "href": "http://t0.tianditu.com/img_c/wmts"
+      },
+      {
+        "name": "cva_c 全球矢量中文注记服务 ",
+        "href": "http://t0.tianditu.com/cva_c/wmts"
+      },
+      {
+        "name": "vec_w 全球矢量地图服务",
+        "href": "http://t0.tianditu.com/vec_w/wmts"
+      },
+      {
+        "name": "cia_w 影像注记",
+        "href": "http://t0.tianditu.com/cia_w/wmts"
+      },
+      {
+        "name": "ter_c 全球地形晕渲地图服务",
+        "href": "http://t0.tianditu.com/ter_c/wmts"
+      },
+      {
+        "name": "cia_c 全球影像中文注记服务",
+        "href": "http://t0.tianditu.com/cia_c/wmts"
+      }
+    ]
+  },
+  {
+    "name":"D3Layers",
+    "method":"addD3Layer",
+    "data": [
+      {
+        "name": "d3_us_10m",
+        "href": "https://d3js.org/us-10m.v1.json"
+      },
+      {
+        "name": "d3_usa",
+        "href": "https://bl.ocks.org/mbostock/raw/4090846/us.json"
+      }
+    ]
+  }
+]

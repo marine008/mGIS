@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="https://js.arcgis.com/3.25/esri/css/esri.css">
     <link rel="stylesheet" href="css/mapCatalog.css">
 
-    <script src="https://js.arcgis.com/3.25"></script>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+        var dojoConfig = {
+            async: true, //是否异步
+            parseOnLoad: true,
+            packages: [{ //解释：require(["js/.."],function(){}) 中  js/ 即为 location的值
+                name: "js", //对应require引用包里的js
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js' //对应的路径
+            }]
+        };
+    </script>
+    <script src="https://js.arcgis.com/3.25"></script>
+
     <script>
         var map;
-        var addArcgisTMSLayer, addArcgisISLayer, addWebTiledLayer;
+        var addArcgisTMSLayer, addArcgisISLayer, addWebTiledLayer, addVectorTileLayer, addTDTTileLayer, addD3Layer;
 
-        var jsonFile = "mapConfig.json";
+        var jsonFile = "data/mapCatalog.json";
         $.getJSON(jsonFile, function (data) {
             $.each(data, function (i) {
                 var data_i = data[i];
@@ -25,6 +37,7 @@
 
                     var liDom = $("<li></li>");
                     $(liDom).attr("href", data_ij.href);
+                    $(liDom).attr("onclick", data_i.method+"(this)");
                     $(liDom).text(data_ij.name);
 
                     $(ulDom).append(liDom);
@@ -37,12 +50,13 @@
                 "esri/layers/ArcGISTiledMapServiceLayer",
                 "esri/layers/ArcGISImageServiceLayer",
                 "esri/layers/WebTiledLayer",
+                "esri/layers/VectorTileLayer",
+                "js/ArcgisTDTLayer",
+                "js/ArcgisD3Layer",
                 "dojo/domReady!"],
-            function (Map, ArcgisTMSLayer, ArcgisISLayer, WebTiledLayer) {
-                map = new Map("map", {
-                    basemap:"topo",
-                    center:[117.23, 23.45],
-                    zoom: 8
+            function (Map, ArcgisTMSLayer, ArcgisISLayer, WebTiledLayer, VectorTileLayer, TDTLayer, D3Layer) {
+                map = new Map("map",{
+                    basemap:"topo"
                 });
 
                 addArcgisTMSLayer = function (obj) {
@@ -68,9 +82,38 @@
                 addArcgisISLayer = function (obj) {
                     map.removeAllLayers();
 
-                    var url = $(obj).attr("href")
+                    var url = $(obj).attr("href");
                     var arcgisISLayer = new ArcgisISLayer(url);
                     map.addLayer(arcgisISLayer);
+                };
+
+                addVectorTileLayer =  function (obj) {
+                    map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var vectorTileLayer = new VectorTileLayer(url);
+                    map.addLayer(vectorTileLayer);
+                };
+
+                // http://www.tianditu.com/service/query.html# 天地图数据来源
+                addTDTTileLayer = function (obj) {
+                    map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var tdtTiledLayer = new TDTLayer(url);
+                    map.addLayer(tdtTiledLayer);
+                };
+
+                addD3Layer = function (obj) {
+                    //map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var d3Layer = new D3Layer(url, {
+                        styles:[ ],
+                        attrs:[
+                            {key: 'id', value: function(d) {return d.properties.name}}
+                        ]});
+                    map.addLayer(d3Layer);
                 }
         });
     </script>
@@ -78,5 +121,7 @@
 <body>
     <div id="map"></div>
     <div id="rightPanel"></div>
+    <!--计划增加一个框来显示图层的信息，包括坐标系统、数据范围（可定位）等-->
+    <!--<div id="left_layerInfo"></div>-->
 </body>
 </html>
