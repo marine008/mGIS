@@ -82,6 +82,10 @@
       {
         "name": "World_Topo_Map",
         "href": "https://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"
+      },
+      {
+        "name": "catalog_2015feature",
+        "href": "https://earthquake.usgs.gov/arcgis/rest/services/eq/catalog_2015feature/MapServer"
       }
     ]
   },
@@ -155,6 +159,10 @@
       {
         "name": "cia_c 全球影像中文注记服务",
         "href": "http://t0.tianditu.com/cia_c/wmts"
+      },
+      {
+        "name": "ibo_w 边界",
+        "href": "http://t{s}.tianditu.cn/ibo_w/wmts"
       }
     ]
   },
@@ -169,6 +177,16 @@
       {
         "name": "d3_usa",
         "href": "https://bl.ocks.org/mbostock/raw/4090846/us.json"
+      }
+    ]
+  },
+  {
+    "name":"GeoRSSLayer",
+    "method":"addGeoRSSLayer",
+    "data": [
+      {
+        "name": "earthquakes",
+        "href": "http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M5.xml"
       }
     ]
   }

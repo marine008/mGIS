@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>esri-leaflet</title>
+
+    <link rel="stylesheet" href="lib/leaflet.css"/>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="lib/leaflet.js"></script>
+    <script src="lib/esri-leaflet.js"></script>
+
+    <script>
+        // https://leafletjs.com/examples
+
+        $(document).ready(function () {
+            var map = L.map("map").setView([37.75, -122.23], 10);
+            /*
+            // 添加Arcgis底图
+            L.esri.basemapLayer("Topographic").addTo(map);*/
+
+            /*
+            // 添加MapServer地图服务
+            L.esri.tiledMapLayer({
+                url: "https://server.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/MapServer"
+            }).addTo(map);*/
+
+            L.tileLayer("http://t{s}.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles", {
+                subdomains: ["0", "1", "2", "3", "4", "5", "6", "7"]
+            }).addTo(map);
+        });
+    </script>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>

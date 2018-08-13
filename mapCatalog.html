@@ -24,6 +24,7 @@
     <script>
         var map;
         var addArcgisTMSLayer, addArcgisISLayer, addWebTiledLayer, addVectorTileLayer, addTDTTileLayer, addD3Layer;
+        var addGeoRSSLayer;
 
         var jsonFile = "data/mapCatalog.json";
         $.getJSON(jsonFile, function (data) {
@@ -51,10 +52,11 @@
                 "esri/layers/ArcGISImageServiceLayer",
                 "esri/layers/WebTiledLayer",
                 "esri/layers/VectorTileLayer",
+                "esri/layers/GeoRSSLayer",
                 "js/ArcgisTDTLayer",
                 "js/ArcgisD3Layer",
                 "dojo/domReady!"],
-            function (Map, ArcgisTMSLayer, ArcgisISLayer, WebTiledLayer, VectorTileLayer, TDTLayer, D3Layer) {
+            function (Map, ArcgisTMSLayer, ArcgisISLayer, WebTiledLayer, VectorTileLayer, GeoRSSLayer, TDTLayer, D3Layer) {
                 map = new Map("map",{
                     basemap:"topo"
                 });
@@ -114,6 +116,14 @@
                             {key: 'id', value: function(d) {return d.properties.name}}
                         ]});
                     map.addLayer(d3Layer);
+                };
+
+                addGeoRSSLayer = function (obj) {
+                    //map.removeAllLayers();
+
+                    var url = $(obj).attr("href");
+                    var geoRSSLayer = new GeoRSSLayer(url);
+                    map.addLayer(geoRSSLayer);
                 }
         });
     </script>
