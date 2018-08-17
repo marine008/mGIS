@@ -5,23 +5,111 @@
     <title>esri-leaflet</title>
 
     <link rel="stylesheet" href="lib/leaflet.css"/>
+    <link rel="stylesheet" href="lib/leaflet-measure-path.css"/>
+    <link rel="stylesheet" href="lib/leaflet.draw.css"/>
+    <link rel="stylesheet" href="lib/leaflet-velocity.css"/>
     <style>
         body { margin:0; padding:0; }
         #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+        #printMap {
+            position: absolute;
+            z-index: 999;
+            width: 60px;
+            height: 30px;
+        }
     </style>
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="lib/leaflet.js"></script>
+    <script src="lib/turf.min.js"></script>
+
+    <!--leaflet插件-->
+    <script src="lib/leaflet-measure-path.js"></script>
     <script src="lib/esri-leaflet.js"></script>
+    <script src="lib/leaflet-easyPrint.js"></script>
+    <script src="lib/leaflet.draw.js"></script>
+    <script src="lib/leaflet-velocity.js"></script>
+
+    <!--样例数据-->
+    <script src="sampleGeojson.js"></script>
+
+    <script src="js/leaflet.LayerCatalog.js"></script>
 
     <script>
+        // 相关插件地址
         // https://leafletjs.com/examples
+        // http://esri.github.io/esri-leaflet
+        // https://github.com/ProminentEdge/leaflet-measure-path 地图量测
+        // https://github.com/htoooth/Leaflet.ChineseTmsProviders 底图插件
+        // https://github.com/danwild/leaflet-velocity 粒子效果
+        // https://ithelp.ithome.com.tw/articles/10196539 粒子实现
+        // https://github.com/danwild/wind-js-leaflet
+        // http://turfjs.org/docs/ 空间分析
+        // http://bl.ocks.org/pgiraud/7ac6155abed975ebf4b3
+        // https://blog.csdn.net/yangdengxian/article/details/79954827
+        // https://www.cnblogs.com/RainyBear/p/6011832.html
+        // https://www.cnblogs.com/CoffeeEddy/p/Leaflet.html 图标效果
+        // http://www.liedman.net/leaflet-routing-machine/tutorials/ 路径规划
 
+        /*
+        本页面将尝试使用leaflet框架进行GIS的相关操作。
+        包括：
+        -[X] 地图加载（常规地图、Arcgis系列地图）
+        -[O] 不通过地图服务直接加载瓦片地图
+        -[X] 地图矢量绘制
+        -[ ] 地图矢量编辑
+        -[O] 地图打印输出
+        -[ ] 地图弹框样式设定
+        -[X] 地图量测
+        -[X] 地图拓扑分析（turf.js） multipolygon的处理采用lineintersect方法
+             参见：https://github.com/Turfjs/turf/issues/702
+        -[X] 地图数据加载
+        -[X] 地图粒子动画效果
+        -[ ] 盐度、温度效果图
+        -[ ] leaflet的vue化
+        -[ ] leaflet的组件化开发
+        -[ ] leaflet加载shp文件
+        */
+
+        /*后续实现地图插件，实现：
+        * 1. 地图控件化，包括缩放按钮的中文化及样式调整，公司logo的嵌入
+        * 2. 地图仓库的控件化，实现快速设置地图          √
+        * 3. 地图图标库，样式库
+        * */
+
+
+        var printPlugin = null, tiles;
         $(document).ready(function () {
-            var map = L.map("map").setView([37.75, -122.23], 10);
+            //var map = L.map("map", {attributionControl: false}).setView([39.74739, -105], 8);
+            //L.control.attribution({prefix: 'lanhit'}).addTo(map);
+
+            // 最佳实践-地图加载
+            var tileLayer = L.tileLayer.catalog("GaoDe.Normal.Map");
+
+            var map = L.map('map', {
+                layers:[ tileLayer ],
+                center:[-22, 150],
+                zoom: 5
+            });
+
+            //addMap(map);
+            //addMeasure(map);
+
+            //addGeojsonLayer(map);
+            //topoAnalyse(map);
+
+            addPrintPlugin(map);
+
+            addDrawControl(map);
+
+            addDynamicLayer(map);
+        });
+
+        // 如果需要加载ArcGIS相关地图类型，需增加**esri-leaflet.js**包
+        function addMap(map) {
             /*
-            // 添加Arcgis底图
-            L.esri.basemapLayer("Topographic").addTo(map);*/
+           // 添加Arcgis底图
+           L.esri.basemapLayer("Topographic").addTo(map);*/
 
             /*
             // 添加MapServer地图服务
@@ -29,13 +117,228 @@
                 url: "https://server.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/MapServer"
             }).addTo(map);*/
 
-            L.tileLayer("http://t{s}.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles", {
+            // 添加天地图
+            tiles = L.tileLayer("http://t{s}.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles", {
                 subdomains: ["0", "1", "2", "3", "4", "5", "6", "7"]
             }).addTo(map);
-        });
+        }
+
+        // 需增加 leaflet.draw 插件
+        function addTools(map) {
+
+        }
+
+        // 需增加**leaflet-measure-path**插件
+        function addMeasure(map) {
+            L.polyline([[24.4922,118.1958],[24.5439,118.3139]], {showMeasurements: true}).addTo(map);
+        }
+        function clearMeasure(map) {
+
+        }
+
+        // 获取geojson并显示
+        function addGeojsonLayer(map) {
+
+            L.geoJSON([bicycleRental, campus, freeBus], {
+                style:function (feature) {
+                    return feature.properties && feature.properties.style;
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 8,
+                        fillColor: "#ff7800",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+                }
+            }).addTo(map);
+        }
+
+        // 空间数据分析
+        function topoAnalyse(map) {
+            var latlng1 = [[
+                [45.48565,-122.801742],
+                [45.60491,-122.801742],
+                [45.60491,-122.584762],
+                [45.48565,-122.584762],
+                [45.48565,-122.801742]
+            ]];
+
+            var latlng2 = [[
+                [45.535693,-122.520217],
+                [45.553967,-122.64038],
+                [45.526554,-122.720031],
+                [45.507309,-122.669906],
+                [45.446643,-122.723464],
+                [45.408574,-122.532577],
+                [45.477466,-122.487258],
+                [45.535693,-122.520217]
+            ]];
+
+            var poly1 = turf.polygon(latlng1);
+            var poly2 = turf.polygon(latlng2);
+
+            L.polygon(latlng1, {color: 'red'}).addTo(map);
+            L.polygon(latlng2, {color: 'blue'}).addTo(map);
+
+            var intersection = turf.intersect(poly1, poly2);
+            if(intersection){
+                L.polygon(intersection.geometry.coordinates, {color: "black", showMeasurements: true}).addTo(map);
+            }
+        }
+
+        function addPrintPlugin(map) {
+            printPlugin = L.easyPrint({
+                tileLayer: tiles,
+                //hidden:true, //隐藏控件
+                sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+                filename: 'myMap',
+                exportOnly: true,
+                hideControlContainer: true
+            }).addTo(map);
+        }
+
+        function addPrintPlugin2(map) {
+            var customActionToPrint = function(context) {
+                return function() {
+                    window.alert("We are printing the MAP. Let's do Custom print here!");
+                    context._printCustom();
+                }
+            };
+
+            L.control.browserPrint({
+                title: 'Just print me!',
+                documentTitle: 'Map printed using leaflet.browser.print plugin',
+                /*printLayer: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    subdomains: 'abcd',
+                    minZoom: 1,
+                    maxZoom: 16,
+                    ext: 'png'
+                }),*/
+                closePopupsOnPrint: false,
+                printModes: [
+                    L.control.browserPrint.mode("Alert", "User specified print action", "A6", customActionToPrint, false),
+                    L.control.browserPrint.mode.landscape(),
+                    "Portrait",
+                    L.control.browserPrint.mode.auto("Automatico", "B4"),
+                    L.control.browserPrint.mode.custom("Séléctionnez la zone", "B5")
+                ],
+                manualMode: false
+            }).addTo(map);
+        }
+
+        function printMap() {
+            printPlugin.printMap('CurrentSize', 'MyManualPrint');
+        }
+
+        function addDrawControl(map) {
+            var editableLayers = new L.FeatureGroup();
+            map.addLayer(editableLayers);
+
+            var options = {
+                position: 'bottomleft',
+                draw: {
+                    polyline: {
+                        shapeOptions: {
+                            color: '#f357a1',
+                            weight: 10
+                        }
+                    },
+                    polygon: {
+                        allowIntersection: false, // Restricts shapes to simple polygons
+                        drawError: {
+                            color: '#e1e100', // Color the shape will turn when intersects
+                            message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                        },
+                        shapeOptions: {
+                            color: '#bada55'
+                        }
+                    },
+                    circle: false, // Turns off this drawing tool
+                    rectangle: {
+                        shapeOptions: {
+                            clickable: false
+                        }
+                    }/*,
+                    marker: {
+                        icon: new MyCustomMarker()
+                    }*/
+                },
+                edit: {
+                    featureGroup: editableLayers, //REQUIRED!!
+                    remove: false
+                }
+            };
+
+            var drawControl = new L.Control.Draw(options);
+            map.addControl(drawControl);
+            map.on(L.Draw.Event.CREATED, function (e) {
+                var type = e.layerType,
+                    layer = e.layer;
+
+                if (type === 'marker') {
+                    layer.bindPopup('A popup!');
+                }
+                if(type === "polygon"){
+                    var polygongArrays = [];
+                    var array = [];
+                    for(var i=0; i< e.layer._latlngs[0].length; i++){
+                        array.push([e.layer._latlngs[0][i].lat, e.layer._latlngs[0][i].lng]);
+                    };
+                    array.push([e.layer._latlngs[0][0].lat, e.layer._latlngs[0][0].lng]);
+                    polygongArrays.push(array);
+
+                    var drawPolygon = turf.polygon(polygongArrays);
+                    var campusPolygon = turf.flip(turf.multiPolygon(campus.geometry.coordinates));
+
+                    //L.polygon(e.layer._latlngs, {color: "black", showMeasurements: true}).addTo(map);
+
+                    var intersection = turf.lineIntersect(drawPolygon, campusPolygon);
+                    if(intersection){
+                        for(var i=0; i<intersection.features.length; i++){
+                            var latlng = intersection.features[i].geometry.coordinates;
+                            L.circleMarker(latlng, {
+                                radius: 8,
+                                fillColor: "black",
+                                color: "#000",
+                                weight: 1,
+                                opacity: 1,
+                                fillOpacity: 0.8
+                            }).addTo(map);
+                        }
+                        //L.polygon(intersection.geometry.coordinates, {color: "black", showMeasurements: true}).addTo(map);
+                    }
+                }
+
+                editableLayers.addLayer(layer);
+            });
+        }
+
+        function addDynamicLayer(map) {
+            $.getJSON('data/water-gbr.json', function (data) {
+
+                var velocityLayer = L.velocityLayer({
+                    data: data,
+                    maxVelocity: 0.6,
+                    velocityScale: 0.1 // arbitrary default 0.005
+                });
+
+                var canvasLayer = L.canvasLayer({
+                    data: data,
+                });
+
+                velocityLayer.addTo(map);
+
+                canvasLayer.addTo(map);
+            });
+        }
     </script>
 </head>
 <body>
     <div id="map"></div>
+    <button id="printMap" onclick="printMap()">打印</button>
 </body>
 </html>
