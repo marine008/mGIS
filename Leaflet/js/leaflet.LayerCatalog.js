@@ -23,6 +23,7 @@ L.TileLayer.Catalog = L.TileLayer.extend({
     }
 });
 
+// 地图仓库
 L.TileLayer.Catalog.providers = {
     TianDiTu: {
         Normal: {
@@ -80,7 +81,8 @@ L.TileLayer.Catalog.providers = {
         },
         Terrain: {
             Map: "http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer/tile/{z}/{y}/{x}"
-        }
+        },
+        Subdomains: []
     }
 };
 

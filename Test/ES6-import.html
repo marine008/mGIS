@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6模块化测试</title>
+</head>
+<body>
+    <button id="test" onclick="this.btnClick()">点我</button>
+
+    <!--
+    ** ES6的浏览器支持目前好像还并不是很理想 2018-08-20 **
+    - 要让浏览器识别ES6的写法，script中需要增加 type="module"的写法
+    - 另外有种方式是引入babel翻译器，将ES6的语法转换成ES5的语法
+
+    (阮一峰的ES6入门教程)[http://es6.ruanyifeng.com/]
+
+    > 以下这种写法，可以直接输出结果，但是button点击的时候会报错，提示找不到结果，
+    > 怀疑是因为以模块化的方式导入，在html调用时也需要指明模块信息等。
+    -->
+    <script type="module">
+        import {sex, echo} from "./js/ES6-import.js";
+        echo(sex);
+        function btnClick() {
+            echo(sex);
+        }
+    </script>
+</body>
+</html>
