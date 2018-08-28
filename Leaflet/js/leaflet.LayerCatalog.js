@@ -4,9 +4,9 @@
  * 参见(Leaflet.KoreanTmsProviders)[https://github.com/tontita/Leaflet.KoreanTmsProviders]
  * 参见(leaflet-providers)[https://github.com/leaflet-extras/leaflet-providers]
  */
-L.TileLayer.Catalog = L.TileLayer.extend({
+var TileLayerCatalog = L.TileLayer.extend({
     initialize: function(type, options) { // (type, Object)
-        var providers = L.TileLayer.Catalog.providers;
+        var providers = TileLayerCatalog.providers;
 
         var parts = type.split('.');
 
@@ -24,7 +24,7 @@ L.TileLayer.Catalog = L.TileLayer.extend({
 });
 
 // 地图仓库
-L.TileLayer.Catalog.providers = {
+TileLayerCatalog.providers = {
     TianDiTu: {
         Normal: {
             Map: "http://t{s}.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}",
@@ -86,6 +86,6 @@ L.TileLayer.Catalog.providers = {
     }
 };
 
-L.tileLayer.catalog = function(type, options) {
-    return new L.TileLayer.Catalog(type, options);
+export var tileLayerCatalog = function(type, options) {
+    return new TileLayerCatalog(type, options);
 };

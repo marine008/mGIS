@@ -1,0 +1,17 @@
+/* marine Logo
+------------------------------------------------------- */
+.marine-maplogo.marine-maplogo-true {
+    margin: 0 0 5px 5px;
+}
+.marine-maplogo-true:before {
+    content:'';
+    display:inline-block;
+    width:85px;
+    height:21px;
+    vertical-align:middle;
+}
+.marine-maplogo.marine-maplogo-true {
+    background-repeat:no-repeat;
+    background-size:85px 21px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGcAAAAZCAYAAAAsaTBIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABQlJREFUeNrsWt1R20AQNozfERVYVIA6QK4gdgWYhySPWBUYV4D9mOTBpgKcCixXEFEBogKUDnLHfMt8LHeng3hiMuOdubHmpNvb32/3Dg47e/qwdLg3wcel7t4E26HPX7/keGx+fPtebYPnwd6sf+2UzPwszMhoujQO6resS+HIZufOMcIkSgFNVUjQHcvnzQaz7t78WEOvzLgz4xP4FGbNzJNh52aMzPuDjwJrVuB14L2NtHKHSTAy49rzzhp+6DD0QBxjDD3E3NL83MNJM+WUiRkCf/VWa47Z4AobiMA2OurI5SKUFf6B5m0UpYZPuWOEOnXIZ+cGyAhfwFn6SXOJZBtsZp1+Sd/WcOh2nWPoiJ6t0LnZvB9ZAHv4nfP3Zv0kRtB/QNZgHSPbhQrGQSCjRY9L8+0KPBbiMBXMlscUzxZBNu92Djz+CRGfIBIqbCARZefX5tuTiHqRQflKFUVWMlQPrDxnFJl2ze83OqAnToA+c8rY3CHHGX6vjQyi30+qJQnp9sg1CvucC2TLPnDYE288L33o0/UY4pZgiNM1JyVW5KCxGVcRzqlc0RqADcH1BRlCw+Tf0MDwt4aee+pAquCrA7Q4R4301aiEMqZRkN0j+XNkVB17CJ1EKJ5BgIrqRlu76VI+D2UOsvcWe9lacIIO59jWOyjWp8FU0HyJPYZ2PXj0EeFjZKUrSBIgxTHWnIBPBjuJDVgG1nHqkGuOuQpIUkbBGmBmTAYrKB1TRMqADLuCoCkcUHvgzZchp77Ohc4PDYz6rAT2mKlu6EUbzG0sOqUZy2b5mfkCe0x0kEDfF/XUwo+tsYCwMcFc6YDqDrq4SslV0Xf1W65vBoSZfWWQGu3iUmErr71u6WpKTxF2ZY7wmnKAmLEww9a5e0CeDoBXmWjWW8jNtAMdxqlZX3Xy58BwrnHwT1AmnkuG5Qe5k2jngIkwWgYKfEFOSZUhBp41Zx5jZK5OCFGVIxNnJN8vQFCOvRtHALzax6y9Rof0K2QM1awM8P0a8Oqj2hMg0pVlCsbXgOpOW8d2qA5hdVuBhtMqR/Y0jqKtM6SOqENs6BtVC6X2rBxre/Ss5R+3nL1cWX3uQggHfJYOuZciW+D9tO3Q3VXKrVQtaKMG2dLQwdTnnNLjgFEgMivH9xvUiVq1oE5YU7BUe2peqFkJZYev9Z6qYNf7PTVUgNvommM3voDB8rYzC0XoCpE2DdzWuupK6RkuQ4iiCzJAJwLWsoADmP+DB+J1TWzj1wTeJ6rbjT6EzoGF0g7mELLk+oODkxxKjwh+7lAAU09EPyg4WKrmgmFDagPfTxXEo3S0oD5jMtxtAg4tPfO+7HDBpyBE6tnvBnOTGFjqqjaxRsEaulLOvB8T4wId1QxGHNN3tm0tVCrH/o1DH/js7a00KFcc3RI0KsvLAL8q0FlVEZAWA5++wHgKSDQ7E5VhTjpw3A5Ih7GiyDhCbZG0LWD0lDq2jWpFpf1dQ9lhjECAxxE5XwroDfhnuEhkaEuoAyoV5N1SVhVkvEy1/nxYvKTOc6kaE75ZvyCdJUCf/lRg9H7Evhc47zRwjBw5pm0158BzfTOGgImKIFFcWtkeNqkDtwOPMfjqoGMY8Pad63dFfRxwR1QfXdTqnK6nVbaLruCoVB8ScQPrO5R1HNcVbybwtUqeINpO4axNS9u+a6oIwirIfkbd7R2+qTp7+n9p/983e+fs6T30R4ABAHtDT60z+V4PAAAAAElFTkSuQmCC);
+}

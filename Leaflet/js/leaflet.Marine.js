@@ -1,8 +1,9 @@
+import {mapLogo} from './leaflet.MapLogo.js';
 /**
  * Marine自定义地图控件，设定相关的配置
  * @type {void|*}
  */
-L.Marine = L.Map.extend({
+var Marine = L.Map.extend({
     options:{
         displayLogo: true,
     },
@@ -14,14 +15,14 @@ L.Marine = L.Map.extend({
 
         L.Map.prototype.initialize.call(this, el,
             L.extend({}, L.Map.prototype.options, options));
-    },
 
-    // 绘制logo MarineLogoControl
-    drawLogo: function () {
-
+        if(this.options.displayLogo === true){
+            this._logoControl = mapLogo(options);
+            this.addControl(this._logoControl);
+        }
     }
 });
 
-L.marine = function (el, options) {
-    return new L.Marine(el, options);
+export var marine = function (el, options) {
+    return new Marine(el, options);
 };

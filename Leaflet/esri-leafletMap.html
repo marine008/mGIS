@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="lib/leaflet-measure-path.css"/>
     <link rel="stylesheet" href="lib/leaflet.draw.css"/>
     <link rel="stylesheet" href="lib/leaflet-velocity.css"/>
+    <link rel="stylesheet" href="css/marine.css"/>
     <style>
         body { margin:0; padding:0; }
         #map { position: absolute; top:0; bottom:0; right:0; left:0; }
@@ -21,9 +22,9 @@
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="lib/leaflet.js"></script>
-    <script src="lib/turf.min.js"></script>
 
     <!--leaflet插件-->
+    <script src="lib/turf.min.js"></script>
     <script src="lib/leaflet-measure-path.js"></script>
     <script src="lib/esri-leaflet.js"></script>
     <script src="lib/leaflet-easyPrint.js"></script>
@@ -33,10 +34,7 @@
     <!--样例数据-->
     <script src="data/sampleGeojson.js"></script>
 
-    <script src="js/leaflet.Marine.js"></script>
-    <script src="js/leaflet.LayerCatalog.js"></script>
-
-    <script>
+    <script type="module">
         // 相关插件地址
         // https://leafletjs.com/examples
         // http://esri.github.io/esri-leaflet
@@ -81,6 +79,8 @@
          * 3. 地图图标库，样式库
         * */
 
+        import {tileLayerCatalog} from './js/leaflet.LayerCatalog.js';
+        import {marine} from './js/leaflet.Marine.js';
 
         var printPlugin = null, tiles;
         $(document).ready(function () {
@@ -88,9 +88,9 @@
             //L.control.attribution({prefix: 'lanhit'}).addTo(map);
 
             // 最佳实践-地图加载
-            var tileLayer = L.tileLayer.catalog("Google.Normal.Map");
+            var tileLayer = tileLayerCatalog("Google.Normal.Map");
 
-            var map = L.marine('map', {
+            var map = marine('map', {
                 layers:[ tileLayer ],
                 center:[39.74, -105],
                 zoom: 8
