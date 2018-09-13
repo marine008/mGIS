@@ -77,7 +77,8 @@ TileLayerCatalog.providers = {
             PurplishBlue: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}",
             Warm: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}",
             Mobile: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity_Mobile/MapServer/tile/{z}/{y}/{x}",
-            Eng: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer/tile/{z}/{y}/{x}"
+            Eng: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer/tile/{z}/{y}/{x}",
+            XM:"http://mapapi.xmtfj.gov.cn:8399/arcgis/rest/services/CGCS_XMMAP/MapServer/tile/{z}/{y}/{x}.undefined"
         },
         Terrain: {
             Map: "http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer/tile/{z}/{y}/{x}"

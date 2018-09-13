@@ -20,7 +20,8 @@
         }
     </style>
 
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="lib/leaflet.js"></script>
 
     <!--leaflet插件-->
@@ -81,6 +82,7 @@
 
         import {tileLayerCatalog} from './js/leaflet.LayerCatalog.js';
         import {marine} from './js/leaflet.Marine.js';
+        import {funTileLayer} from './js/leaflet.FunTileLayer.js';
 
         var printPlugin = null, tiles;
         $(document).ready(function () {
@@ -88,12 +90,23 @@
             //L.control.attribution({prefix: 'lanhit'}).addTo(map);
 
             // 最佳实践-地图加载
-            var tileLayer = tileLayerCatalog("Google.Normal.Map");
+            //var tileLayer = tileLayerCatalog("Arcgis.Normal.XM");
+            var tileLayer = funTileLayer(
+                function (view) {
+                    //alert(view.tile.column);
+                    // 11-12级时差了一张图的row
+                    var url = "http://mapapi.xmtfj.gov.cn:8399/arcgis/rest/services/CGCS_XMMAP/MapServer/tile/{z}/{y}/{x}.undefined"
+                        .replace("{z}", view.zoom)
+                        .replace("{y}", view.tile.row - Math.round(2030 * Math.pow(1/2, 13 - view.zoom)))
+                        .replace("{x}", view.tile.column);
+                    return url;
+                }
+            );
 
             var map = marine('map', {
                 layers:[ tileLayer ],
-                center:[39.74, -105],
-                zoom: 8
+                center:[24.47, 118.1373],
+                zoom: 10
             });
 
             //addMap(map);
