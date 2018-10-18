@@ -1,3 +1,4 @@
+import L from './leaflet.js';
 
 var FunTileLayer = L.TileLayer.extend({
 

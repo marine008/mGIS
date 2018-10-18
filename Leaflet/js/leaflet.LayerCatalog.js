@@ -4,6 +4,8 @@
  * 参见(Leaflet.KoreanTmsProviders)[https://github.com/tontita/Leaflet.KoreanTmsProviders]
  * 参见(leaflet-providers)[https://github.com/leaflet-extras/leaflet-providers]
  */
+import L from './leaflet.js';
+
 var TileLayerCatalog = L.TileLayer.extend({
     initialize: function(type, options) { // (type, Object)
         var providers = TileLayerCatalog.providers;
@@ -77,8 +79,7 @@ TileLayerCatalog.providers = {
             PurplishBlue: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}",
             Warm: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}",
             Mobile: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity_Mobile/MapServer/tile/{z}/{y}/{x}",
-            Eng: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer/tile/{z}/{y}/{x}",
-            XM:"http://mapapi.xmtfj.gov.cn:8399/arcgis/rest/services/CGCS_XMMAP/MapServer/tile/{z}/{y}/{x}.undefined"
+            Eng: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunityENG/MapServer/tile/{z}/{y}/{x}"
         },
         Terrain: {
             Map: "http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer/tile/{z}/{y}/{x}"

@@ -1,4 +1,5 @@
 import {mapLogo} from './leaflet.MapLogo.js';
+import L from './leaflet.js';
 /**
  * Marine自定义地图控件，设定相关的配置
  * @type {void|*}

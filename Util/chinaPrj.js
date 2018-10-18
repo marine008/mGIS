@@ -6,6 +6,8 @@
  * https://blog.genglinxiao.com/%E5%85%B3%E4%BA%8E%E5%9C%B0%E5%9B%BE%E5%9D%90%E6%A0%87%E5%81%8F%E7%A7%BB/
  * https://archive.codeplex.com/?p=on4wp7#353936
  * https://blog.csdn.net/coolypf/article/details/8686588
+ * https://wuyongzheng.wordpress.com/2010/01/22/china-map-deviation-as-a-regression-problem/
+ * http://wuyongzheng.github.io/china-map-deviation/paper.html
  *
  * GCJ-02坐标系，椭球体：Krasovsky 1940
  * a=6378245.0, 1/f = 298.3

@@ -1,6 +1,8 @@
 /**
  * 地图Logo控件
  */
+import L from './leaflet.js';
+
 var MapLogo =  L.Control.extend({
     options: {
         position: 'bottomleft'

@@ -22,15 +22,14 @@
 
     <!--<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>-->
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script src="lib/leaflet.js"></script>
 
     <!--leaflet插件-->
-    <script src="lib/turf.min.js"></script>
-    <script src="lib/leaflet-measure-path.js"></script>
-    <script src="lib/esri-leaflet.js"></script>
-    <script src="lib/leaflet-easyPrint.js"></script>
-    <script src="lib/leaflet.draw.js"></script>
-    <script src="lib/leaflet-velocity.js"></script>
+     <!--<script src="lib/turf.min.js"></script>
+     <script src="lib/leaflet-measure-path.js"></script>
+     <script src="lib/esri-leaflet.js"></script>
+     <script src="lib/leaflet-easyPrint.js"></script>
+     <script src="lib/leaflet.draw.js"></script>
+     <script src="lib/leaflet-velocity.js"></script>-->
 
     <!--样例数据-->
     <script src="data/sampleGeojson.js"></script>
@@ -51,6 +50,7 @@
         // https://www.cnblogs.com/RainyBear/p/6011832.html 加载离线地图
         // https://www.cnblogs.com/CoffeeEddy/p/Leaflet.html 图标效果
         // http://www.liedman.net/leaflet-routing-machine/tutorials/ 路径规划
+        // https://blog.csdn.net/GISuuser/article/details/80802280 手机端地图访问方案
 
         /*
         本页面将尝试使用leaflet框架进行GIS的相关操作。
@@ -90,7 +90,8 @@
             //L.control.attribution({prefix: 'lanhit'}).addTo(map);
 
             // 最佳实践-地图加载
-            //var tileLayer = tileLayerCatalog("Arcgis.Normal.XM");
+            var tileLayer = tileLayerCatalog("Arcgis.Normal.XM");
+            /*
             var tileLayer = funTileLayer(
                 function (view) {
                     //alert(view.tile.column);
@@ -102,6 +103,7 @@
                     return url;
                 }
             );
+            */
 
             var map = marine('map', {
                 layers:[ tileLayer ],
@@ -112,7 +114,7 @@
             //addMap(map);
             //addMeasure(map);
 
-            addGeojsonLayer(map);
+            //addGeojsonLayer(map);
             //topoAnalyse(map);
 
             //addPrintPlugin(map);
